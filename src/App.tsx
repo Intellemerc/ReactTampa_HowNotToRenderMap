@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ClusterMap from "./Map/ClusterMap";
+import "./App.css";
 
 const App: React.FC = () => {
+  const [form, setValues] = useState({
+    maxPos: 1000
+  });
+
+  const updateForm = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setValues({
+      maxPos: parseFloat(e.currentTarget.value)
+    });
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="MaxPosInput">
+        <input
+          placeholder="Enter Max Positions"
+          onChange={updateForm}
+          value={form.maxPos}
+        />
+      </div>
+      <ClusterMap maxPositions={form.maxPos} />
     </div>
   );
-}
+};
 
 export default App;
