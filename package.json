@@ -9,6 +9,7 @@
     "@types/react-dom": "16.8.4",
     "@types/recompose": "^0.30.6",
     "faker": "^4.1.0",
+    "json-server": "^0.15.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
@@ -18,7 +19,7 @@
     "typescript": "3.5.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "start json-server --watch serverEndpoint.js --port 3001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
