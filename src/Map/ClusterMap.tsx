@@ -11,8 +11,8 @@ import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClust
 import { IGpsLocaiton } from "../IGPSLocation";
 
 const DEFAULT_VIEWPORT = {
-  center: { lat: 28.040578, lng: -82.506877 },
-  zoom: 3
+  center: { lat: 37.040578, lng: -98.506877 },
+  zoom: 5
 };
 
 interface IClusterMapProps {
@@ -37,7 +37,7 @@ const ClusterMap: React.StatelessComponent<IClusterMapProps> = props => {
         defaultCenter={DEFAULT_VIEWPORT.center}
       >
         {positions ? (
-          <MarkerClusterer gridSize={100}>
+          <MarkerClusterer gridSize={50}>
             {positions.map(pos => (
               <Marker
                 key={pos.id}
@@ -61,7 +61,7 @@ const enahnced = compose<IClusterMapProps, IClusterMapProps>(
     containerElement: (
       <div
         style={{
-          height: `400px`,
+          height: `600px`,
           width: "100%",
           margin: "auto auto"
         }}
