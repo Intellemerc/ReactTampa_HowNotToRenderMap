@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import ClusterMap from "./Map/ClusterMap";
+import Map from "./Map/Map";
 import "./App.css";
+import { useDebounce } from "use-debounce";
 
 const App: React.FC = () => {
   const [form, setValues] = useState({
@@ -13,16 +14,20 @@ const App: React.FC = () => {
       maxPos: parseFloat(e.currentTarget.value)
     });
   };
+  const debounceMaxPos = useDebounce<number>(form.maxPos, 1000);
   return (
     <div className="App">
       <div className="MaxPosInput">
         <input
-          placeholder="Enter Max Positions"
+          type="number"
+          min="0"
+          max="100000"
+          step="1000"
           onChange={updateForm}
           value={form.maxPos}
         />
       </div>
-      <ClusterMap maxPositions={form.maxPos} />
+      <Map maxPositions={debounceMaxPos[0]} />
     </div>
   );
 };

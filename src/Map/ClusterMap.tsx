@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { withProps, compose } from "recompose";
 import {
   withScriptjs,
@@ -15,59 +15,57 @@ const DEFAULT_VIEWPORT = {
   zoom: 3
 };
 
-interface ICustomerMapState {
-  positions: IGpsLocaiton[];
-}
-interface ICustomerMapProp {
-  maxPositions: number;
+interface IClusterMapProps {
+  positions?: IGpsLocaiton[];
 }
 
-const ClusterMap: React.StatelessComponent<ICustomerMapProp> = props => {
-  const [data, setData] = useState<ICustomerMapState>({ positions: [] });
-  const { maxPositions } = props;
+interface IPositionInfoProps {
+  numPos: number;
+}
 
-  const getPositions = async () => {
-    for (let i = 0; i < maxPositions / 1000; i++) {
-      fetch(
-        "http://localhost:3001/positions?_limit=" + maxPositions + "&_page=" + i
-      )
-        .then(resp => resp.json())
-        .then(positions => {
-          setData({ positions });
-        });
-    }
-  };
+const PositionInfo: React.StatelessComponent<IPositionInfoProps> = props => {
+  const { numPos } = props;
+  return <div>{numPos} positions loaded.</div>;
+};
 
-  useEffect(() => {
-    getPositions();
-  }, [maxPositions]);
-
+const ClusterMap: React.StatelessComponent<IClusterMapProps> = props => {
+  const { positions } = props;
   return (
-    <div>
+    <>
       <GoogleMap
         defaultZoom={DEFAULT_VIEWPORT.zoom}
         defaultCenter={DEFAULT_VIEWPORT.center}
       >
-        {data.positions.map(pos => (
-          <Marker
-            key={pos.id}
-            position={{ lat: pos.latitude, lng: pos.longitude }}
-          />
-        ))}
+        {positions ? (
+          <MarkerClusterer gridSize={100}>
+            {positions.map(pos => (
+              <Marker
+                key={pos.id}
+                position={{ lat: pos.latitude, lng: pos.longitude }}
+              />
+            ))}
+          </MarkerClusterer>
+        ) : null}
       </GoogleMap>
-      <div>Displaying {data.positions.length} Positions</div>
-    </div>
+      <PositionInfo numPos={positions ? positions.length : 0} />
+    </>
   );
 };
 
-const enahnced = compose<ICustomerMapProp, ICustomerMapProp>(
+const enahnced = compose<IClusterMapProps, IClusterMapProps>(
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?v=3.exp&key=" +
       process.env.REACT_APP_GOOGLE_MAPS_API,
     loadingElement: <div style={{ height: `90%`, width: "100vw" }} />,
     containerElement: (
-      <div style={{ height: `400px`, width: "100%", margin: "auto auto" }} />
+      <div
+        style={{
+          height: `400px`,
+          width: "100%",
+          margin: "auto auto"
+        }}
+      />
     ),
     mapElement: <div style={{ height: `100%` }} />
   }),
