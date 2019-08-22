@@ -35,19 +35,22 @@ const Map: React.StatelessComponent<ICustomerMapProp> = props => {
 
   useEffect(() => {
     async function updatePositions() {
-      if (!updateList) return;
+      if (!updateList || positions.length === 0) return;
 
-      API.GetItems(updateList.map(itm => itm + 5000))
-        .then(pos => {
-          pos.forEach(itm => {
-            if (positions) positions[itm.i] = itm.position;
+      API.GetItems(updateList)
+        .then(newPositions => {
+          return positions.map(origPos => {
+            const matched = newPositions.filter(np => np.id === origPos.id);
+            if (matched.length > 0) {
+              return matched[0];
+            }
+            return origPos;
           });
-          return positions;
         })
         .then(updatedPositions => {
           if (updatedPositions) {
             console.log(`${updatedPositions.length} Positions updated`);
-            //setData({ positions: updatedPositions, loading: false });
+            setData({ positions: updatedPositions, loading: false });
           }
         });
     }

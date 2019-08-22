@@ -36,18 +36,14 @@ class API {
     return pages;
   }
   //replace previous pos with random position, but keep array index
-  GetItems(itemsToUpdate: number[]): Promise<IIndexedPosition[]> {
+  GetItems(itemsToUpdate: number[]): Promise<IGpsLocaiton[]> {
     return new Promise((resolve, reject) => {
       resolve(
         itemsToUpdate.map(itm => {
-          let pos = data[Math.floor(Math.random() * 1000)];
+          let pos = data[Math.floor(Math.random() * MAX_LIMIT)];
           //create new object with index of existin position, new gps position
           //and the ID of the position
-          const updated: IIndexedPosition = {
-            i: itm,
-            position: { ...pos, id: itm }
-          };
-          return updated;
+          return { ...pos, id: itm };
         })
       );
     });

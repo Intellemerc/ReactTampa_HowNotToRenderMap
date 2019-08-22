@@ -3,10 +3,6 @@ import Map from "./Map/Map";
 import "./App.css";
 import { useDebounce } from "use-debounce";
 
-interface window {
-  dbg: any;
-}
-
 const setIntervalAsync = (fn: any, ms: number) => {
   fn().then(() => {
     setTimeout(() => setIntervalAsync(fn, ms), ms);
@@ -37,15 +33,15 @@ const App: React.FC = () => {
     if (intervalActive) return;
     intervalActive = true;
     console.log("Setting up refresh interval");
-    // setIntervalAsync(async () => {
-    //   if (!itu) {
-    //     itu = Array.from(Array(1000).keys());
-    //   }
-    //   itu = itu.map(() => Math.floor(Math.random() * form.maxPos));
-    //   console.log(`updating ${itu.length} items`);
+    setIntervalAsync(async () => {
+      if (!itu) {
+        itu = Array.from(Array(100).keys());
+      }
+      itu = itu.map(() => Math.floor(Math.random() * form.maxPos));
+      console.log(`updating ${itu.length} items`);
 
-    //   setItemsToUpdate(itu);
-    // }, 3000);
+      setItemsToUpdate(itu);
+    }, 3000);
   }, [itemsToUpdate]);
 
   return (
