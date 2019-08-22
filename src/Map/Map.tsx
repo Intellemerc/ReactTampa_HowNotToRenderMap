@@ -3,8 +3,7 @@ import { IGpsLocaiton } from "../IGPSLocation";
 import { ClipLoader } from "react-spinners";
 
 import ClusterMap from "./ClusterMap";
-
-const MAX_LIMIT = 1000;
+import API from "../API";
 
 interface IMapState {
   positions?: IGpsLocaiton[];
@@ -12,6 +11,7 @@ interface IMapState {
 }
 interface ICustomerMapProp {
   maxPositions: number;
+  updateList: number[] | undefined;
 }
 
 const Map: React.StatelessComponent<ICustomerMapProp> = props => {
@@ -19,36 +19,40 @@ const Map: React.StatelessComponent<ICustomerMapProp> = props => {
     positions: [],
     loading: true
   });
-  const { maxPositions } = props;
-
+  const { maxPositions, updateList } = props;
   useEffect(() => {
     setData({ loading: true, positions });
     async function getPositions() {
       console.log("loading maxpositions: ", maxPositions);
-      let pages: Promise<IGpsLocaiton>[] = [];
 
-      for (let i = 1; i < maxPositions / MAX_LIMIT + 1; i++) {
-        const positionsToLoad =
-          maxPositions > MAX_LIMIT ? MAX_LIMIT : maxPositions;
-        const url =
-          "http://localhost:3001/positions?_limit=" +
-          positionsToLoad +
-          "&_page=" +
-          i;
-        // console.log("My Url", url);
-        pages.push(fetch(url).then(resp => resp.json()));
-      }
-      console.log("All pages: ", ...pages);
-
-      Promise.all(pages).then(pages => {
-        let positions: IGpsLocaiton[] = [];
-        positions = positions.concat(...pages);
+      API.GetPositions(maxPositions).then(positions => {
         console.log("Positions/length: ", positions, positions.length);
         setData({ positions, loading: false });
       });
     }
     getPositions();
   }, [maxPositions]);
+
+  useEffect(() => {
+    async function updatePositions() {
+      if (!updateList) return;
+
+      API.GetItems(updateList.map(itm => itm + 5000))
+        .then(pos => {
+          pos.forEach(itm => {
+            if (positions) positions[itm.i] = itm.position;
+          });
+          return positions;
+        })
+        .then(updatedPositions => {
+          if (updatedPositions) {
+            console.log(`${updatedPositions.length} Positions updated`);
+            //setData({ positions: updatedPositions, loading: false });
+          }
+        });
+    }
+    updatePositions();
+  }, [updateList]);
 
   return (
     <>
