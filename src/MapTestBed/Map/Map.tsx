@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { IGpsLocaiton } from "../IGPSLocation";
+import { IGpsLocaiton } from "./IGPSLocation";
 import { ClipLoader } from "react-spinners";
 
 import ClusterMap from "./ClusterMap";
-import API from "../API";
+import API from "../../API";
 
 interface IMapState {
   positions?: IGpsLocaiton[];

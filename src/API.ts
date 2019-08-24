@@ -1,4 +1,4 @@
-import { IGpsLocaiton } from "./IGPSLocation";
+import { IGpsLocaiton } from "./MapTestBed/Map/IGPSLocation";
 import faker from "faker";
 
 const MAX_LIMIT = 1000000;

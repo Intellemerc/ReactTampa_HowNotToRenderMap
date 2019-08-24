@@ -8,7 +8,7 @@ import {
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 
-import { IGpsLocaiton } from "../IGPSLocation";
+import { IGpsLocaiton } from "./IGPSLocation";
 
 const DEFAULT_VIEWPORT = {
   center: { lat: 37.040578, lng: -98.506877 },
