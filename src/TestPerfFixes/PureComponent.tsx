@@ -9,8 +9,15 @@ export default class TestPure extends React.PureComponent<IProps> {
     const { outsideCount } = this.props;
     return (
       <div>
-        Test pure (Updates props change):
-        {outsideCount}
+        Test pure (Updates props change):&nbsp;
+        <span
+          style={{
+            fontWeight: "bolder",
+            fontSize: 16
+          }}
+        >
+          {outsideCount}
+        </span>
       </div>
     );
   }

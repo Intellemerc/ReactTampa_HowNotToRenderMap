@@ -7,14 +7,35 @@ interface IProps {
 
 export default class TestPure extends React.Component<IProps> {
   shouldComponentUpdate(newProps) {
-    return newProps.forceUpdate;
+    return (
+      newProps.forceUpdate && newProps.outsideCount !== this.props.outsideCount
+    );
   }
   render() {
     const { outsideCount } = this.props;
     return (
       <div>
         Test pure (only updates when forced to update):
-        {outsideCount}
+        <span
+          style={{
+            fontWeight: "bolder",
+            fontSize: 16
+          }}
+        >
+          &nbsp;
+          {outsideCount}
+        </span>
+        <div>
+          with time:{" "}
+          <span
+            style={{
+              fontWeight: "bolder",
+              fontSize: 16
+            }}
+          >
+            {new Date().toTimeString()}
+          </span>
+        </div>
       </div>
     );
   }
