@@ -35,7 +35,7 @@ const App: React.FC = () => {
     console.log("Setting up refresh interval");
     setIntervalAsync(async () => {
       if (!itu) {
-        itu = Array.from(Array(100).keys());
+        itu = Array.from(Array(250).keys());
       }
       itu = itu.map(() => Math.floor(Math.random() * form.maxPos));
       console.log(`updating ${itu.length} items`);

@@ -8,12 +8,28 @@ interface IIndexedPosition {
   position: IGpsLocaiton;
 }
 
+function randomCoordBetween(min, max) {
+  const precision = 4;
+
+  return parseFloat(
+    faker.random
+      .number({
+        max: max,
+        min: min,
+        precision: parseFloat((0.0).toPrecision(precision) + "1")
+      })
+      .toFixed(precision)
+  );
+}
+
 const data = (() => {
   var positions = [];
   console.log();
   for (var id = 0; id < 1000000; id++) {
-    const latitude = parseFloat(faker.address.latitude());
-    const longitude = parseFloat(faker.address.longitude());
+    const latitude = randomCoordBetween(21, 50);
+    const longitude = randomCoordBetween(-125, -77);
+    //if (id % 5000 === 0) console.log(latitude, longitude);
+
     const label = `${faker.name.firstName()} ${faker.name.lastName()}`;
     positions.push({
       id,
