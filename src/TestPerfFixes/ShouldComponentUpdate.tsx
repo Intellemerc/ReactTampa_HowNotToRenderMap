@@ -25,17 +25,6 @@ export default class TestPure extends React.Component<IProps> {
           &nbsp;
           {outsideCount}
         </span>
-        <div>
-          with time:{" "}
-          <span
-            style={{
-              fontWeight: "bolder",
-              fontSize: 16
-            }}
-          >
-            {new Date().toTimeString()}
-          </span>
-        </div>
       </div>
     );
   }

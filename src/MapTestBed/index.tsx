@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Map from "./Map/Map";
+import MapContainer from "./Map/MapContainer";
 import { useDebounce } from "use-debounce";
 
 const setIntervalAsync = (fn: any, ms: number) => {
@@ -45,8 +45,9 @@ const MapTester: React.FC = () => {
   }, [itemsToUpdate]);
 
   return (
-    <div>
-      <div className="MaxPosInput">
+    <div style={{ height: "75%" }}>
+      <div className="MaxPosInput" style={{ textAlign: "center" }}>
+        <label>Max Positions:&nbsp; </label>
         <input
           type="number"
           min="0"
@@ -56,7 +57,10 @@ const MapTester: React.FC = () => {
           value={form.maxPos}
         />
       </div>
-      <Map maxPositions={debounceMaxPos[0]} updateList={itemsToUpdate} />
+      <MapContainer
+        maxPositions={debounceMaxPos[0]}
+        updateList={itemsToUpdate}
+      />
     </div>
   );
 };

@@ -14,7 +14,7 @@ interface ICustomerMapProp {
   updateList: number[] | undefined;
 }
 
-const Map: React.StatelessComponent<ICustomerMapProp> = props => {
+const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
   const [{ positions, loading }, setData] = useState<IMapState>({
     positions: [],
     loading: true
@@ -64,6 +64,12 @@ const Map: React.StatelessComponent<ICustomerMapProp> = props => {
       >
         <ClipLoader loading={loading} size={150} />
       </div>
+      <div style={{ textAlign: "center" }}>
+        Positions Loaded:{" "}
+        <span style={{ fontWeight: "bolder" }}>
+          {positions ? positions.length : 0}
+        </span>
+      </div>
       <div style={{ opacity: loading ? 0.25 : 1 }}>
         <ClusterMap positions={positions} />
       </div>
@@ -71,4 +77,4 @@ const Map: React.StatelessComponent<ICustomerMapProp> = props => {
   );
 };
 
-export default Map;
+export default MapContainer;

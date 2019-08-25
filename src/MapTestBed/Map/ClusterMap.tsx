@@ -19,36 +19,24 @@ interface IClusterMapProps {
   positions?: IGpsLocaiton[];
 }
 
-interface IPositionInfoProps {
-  numPos: number;
-}
-
-const PositionInfo: React.StatelessComponent<IPositionInfoProps> = props => {
-  const { numPos } = props;
-  return <div>{numPos} positions loaded.</div>;
-};
-
 const ClusterMap: React.StatelessComponent<IClusterMapProps> = props => {
   const { positions } = props;
   return (
-    <>
-      <GoogleMap
-        defaultZoom={DEFAULT_VIEWPORT.zoom}
-        defaultCenter={DEFAULT_VIEWPORT.center}
-      >
-        {positions ? (
-          <MarkerClusterer gridSize={50}>
-            {positions.map(pos => (
-              <Marker
-                key={pos.id}
-                position={{ lat: pos.latitude, lng: pos.longitude }}
-              />
-            ))}
-          </MarkerClusterer>
-        ) : null}
-      </GoogleMap>
-      <PositionInfo numPos={positions ? positions.length : 0} />
-    </>
+    <GoogleMap
+      defaultZoom={DEFAULT_VIEWPORT.zoom}
+      defaultCenter={DEFAULT_VIEWPORT.center}
+    >
+      {positions ? (
+        <MarkerClusterer gridSize={50}>
+          {positions.map(pos => (
+            <Marker
+              key={pos.id}
+              position={{ lat: pos.latitude, lng: pos.longitude }}
+            />
+          ))}
+        </MarkerClusterer>
+      ) : null}
+    </GoogleMap>
   );
 };
 
@@ -61,7 +49,7 @@ const enahnced = compose<IClusterMapProps, IClusterMapProps>(
     containerElement: (
       <div
         style={{
-          height: `600px`,
+          height: `500px`,
           width: "100%",
           margin: "auto auto"
         }}

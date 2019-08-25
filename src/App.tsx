@@ -7,8 +7,8 @@ import PerTests from "./TestPerfFixes";
 const App: React.FC = () => {
   return (
     <div className="App">
-      {/* <Map /> */}
-      <PerTests />
+      <Map />
+      {/* <PerTests /> */}
     </div>
   );
 };
