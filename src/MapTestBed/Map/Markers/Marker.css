@@ -1,0 +1,19 @@
+.marker {
+  position: absolute;
+  cursor: pointer;
+  /* width: $marker-width;
+  height: $marker-height;
+  left: -$marker-width / 2;
+  top: -$marker-height / 2; 
+
+  border: $marker-border-width solid #004336;*/
+  border-radius: 50%;
+  background-color: white;
+  text-align: center;
+  color: #333;
+
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

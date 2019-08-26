@@ -1,6 +1,11 @@
-export interface IGpsLocaiton {
-  id: number;
-  label: string;
-  latitude: number;
-  longitude: number;
+export default interface IGpsLocation {
+  type: "Feature";
+  geometry: {
+    type: "Point";
+    coordinates: number[];
+  };
+  properties: {
+    label: string;
+    id: number;
+  };
 }

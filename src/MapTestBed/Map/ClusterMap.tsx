@@ -6,39 +6,113 @@ import {
   GoogleMap,
   Marker
 } from "react-google-maps";
-import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 
-import { IGpsLocaiton } from "./IGPSLocation";
+import "./Markers/Marker.css";
+//import ClusterMarker from "./Markers/ClusterMarker";
 
 const DEFAULT_VIEWPORT = {
   center: { lat: 37.040578, lng: -98.506877 },
   zoom: 5
 };
 
+var clusterCircle = {
+  path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
+  fillColor: "#699ff5",
+  fillOpacity: 1,
+  strokeWeight: 0,
+  scale: 0.75
+};
+
 interface IClusterMapProps {
-  positions?: IGpsLocaiton[];
+  positions?: supercluster<supercluster.AnyProps, supercluster.AnyProps>;
+  onBoundshanged: () => void;
+  count: number;
 }
 
-const ClusterMap: React.StatelessComponent<IClusterMapProps> = props => {
-  const { positions } = props;
-  return (
-    <GoogleMap
-      defaultZoom={DEFAULT_VIEWPORT.zoom}
-      defaultCenter={DEFAULT_VIEWPORT.center}
-    >
-      {positions ? (
-        <MarkerClusterer gridSize={50}>
-          {positions.map(pos => (
-            <Marker
-              key={pos.id}
-              position={{ lat: pos.latitude, lng: pos.longitude }}
-            />
-          ))}
-        </MarkerClusterer>
-      ) : null}
-    </GoogleMap>
-  );
-};
+//Feature<Point, AnyProps>
+function getMarkers(
+  map: any,
+  positions: supercluster<supercluster.AnyProps, supercluster.AnyProps>
+) {
+  if (!positions || !map || !map.current) return null;
+
+  map = map.current;
+  //get the maps current viewport and zoom level
+  const bounds = map.getBounds();
+  const zoom = map.getZoom();
+
+  //ask supercluster to get the positions in the viewport
+  const sw = bounds.getSouthWest(),
+    ne = bounds.getNorthEast();
+  const bbox: GeoJSON.BBox = [sw.lng(), sw.lat(), ne.lng(), ne.lat()];
+
+  let clusters = [];
+  if (sw.lng() > ne.lng()) {
+    // here we need to get clusters two times:
+    // when there are negative values
+    bbox[0] = sw.lng() - 360;
+    clusters = positions.getClusters(bbox, zoom);
+    // ...and positive ones.
+    bbox[0] = sw.lng();
+    bbox[2] = ne.lng() + 360;
+    clusters = clusters.concat(positions.getClusters(bbox, zoom));
+  } else {
+    clusters = positions.getClusters(bbox, zoom);
+  }
+
+  return clusters.map(feature => {
+    var latLon = {
+      lng: feature.geometry.coordinates[0],
+      lat: feature.geometry.coordinates[1]
+    };
+
+    if (feature.properties && feature.properties.cluster) {
+      var count = feature.properties.point_count;
+      return (
+        <Marker
+          position={latLon}
+          key={"Cluster:" + feature.properties.cluster_id}
+          label={count.toString()}
+          icon={clusterCircle}
+        />
+      );
+    }
+    return <Marker position={latLon} key={feature.properties.id} />;
+  });
+}
+
+class ClusterMap extends React.Component<IClusterMapProps> {
+  map: any;
+  holdUpdates: boolean;
+  constructor(props) {
+    super(props);
+    this.holdUpdates = false;
+    this.map = React.createRef();
+  }
+  componentDidMount() {
+    this.holdUpdates = true;
+  }
+  render() {
+    const { positions, count, onBoundshanged } = this.props;
+
+    //console.time("getmarkers");
+    const markers = getMarkers(this.map, positions);
+    //console.timeEnd("getmarkers");
+    return (
+      <>
+        <div>count: {count}</div>
+        <GoogleMap
+          ref={this.map}
+          defaultZoom={DEFAULT_VIEWPORT.zoom}
+          defaultCenter={DEFAULT_VIEWPORT.center}
+          onBoundsChanged={onBoundshanged}
+        >
+          {markers}
+        </GoogleMap>
+      </>
+    );
+  }
+}
 
 const enahnced = compose<IClusterMapProps, IClusterMapProps>(
   withProps({

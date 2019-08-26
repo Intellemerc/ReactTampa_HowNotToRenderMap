@@ -1,12 +1,8 @@
-import { IGpsLocaiton } from "./MapTestBed/Map/IGPSLocation";
 import faker from "faker";
 
-const MAX_LIMIT = 1000000;
+import IGpsLocation from "./MapTestBed/Map/IGPSLocation";
 
-interface IIndexedPosition {
-  i: number;
-  position: IGpsLocaiton;
-}
+const MAX_LIMIT = 100000;
 
 function randomCoordBetween(min, max) {
   const precision = 4;
@@ -23,27 +19,34 @@ function randomCoordBetween(min, max) {
 }
 
 const data = (() => {
-  var positions = [];
+  console.time("genData");
+  var positions: IGpsLocation[] = [];
   console.log();
-  for (var id = 0; id < 1000000; id++) {
+  for (var id = 0; id < MAX_LIMIT; id++) {
     const latitude = randomCoordBetween(21, 50);
     const longitude = randomCoordBetween(-125, -77);
     //if (id % 5000 === 0) console.log(latitude, longitude);
 
     const label = `${faker.name.firstName()} ${faker.name.lastName()}`;
     positions.push({
-      id,
-      latitude,
-      longitude,
-      label
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [longitude, latitude]
+      },
+      properties: {
+        label,
+        id
+      }
     });
   }
+  console.timeEnd("genData");
   return positions;
 })();
 
 class API {
-  GetPositions(maxPositions: number): Promise<IGpsLocaiton[]> {
-    let pages: Promise<IGpsLocaiton[]> = new Promise((resolve, reject) => {
+  GetPositions(maxPositions: number): Promise<IGpsLocation[]> {
+    let pages: Promise<IGpsLocation[]> = new Promise((resolve, reject) => {
       resolve(
         data.slice(0, maxPositions < MAX_LIMIT ? maxPositions : MAX_LIMIT)
       );
@@ -52,14 +55,22 @@ class API {
     return pages;
   }
   //replace previous pos with random position, but keep array index
-  GetItems(itemsToUpdate: number[]): Promise<IGpsLocaiton[]> {
+  GetItems(
+    itemsToUpdate: number[],
+    existingPostions: IGpsLocation[]
+  ): Promise<IGpsLocation[]> {
     return new Promise((resolve, reject) => {
       resolve(
         itemsToUpdate.map(itm => {
-          let pos = data[Math.floor(Math.random() * MAX_LIMIT)];
+          let existing =
+            data[
+              Math.floor(Math.random() * (MAX_LIMIT - existingPostions.length))
+            ];
           //create new object with index of existin position, new gps position
           //and the ID of the position
-          return { ...pos, id: itm };
+          let newItm = { ...existing };
+          newItm.properties.id = itm;
+          return newItm;
         })
       );
     });

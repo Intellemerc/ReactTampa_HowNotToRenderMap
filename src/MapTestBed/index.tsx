@@ -38,7 +38,7 @@ const MapTester: React.FC = () => {
         itu = Array.from(Array(250).keys());
       }
       itu = itu.map(() => Math.floor(Math.random() * form.maxPos));
-      console.log(`updating ${itu.length} items`);
+      //console.log(`updating ${itu.length} items`);
 
       setItemsToUpdate(itu);
     }, 3000);
