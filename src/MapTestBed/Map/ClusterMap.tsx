@@ -26,6 +26,8 @@ var clusterCircle = {
 interface IClusterMapProps {
   positions?: supercluster<supercluster.AnyProps, supercluster.AnyProps>;
   onBoundshanged: () => void;
+  onDragStart: () => void;
+  onDragEnd: () => void;
   count: number;
 }
 
@@ -71,7 +73,7 @@ function getMarkers(
       return (
         <Marker
           position={latLon}
-          key={"Cluster:" + feature.properties.cluster_id}
+          key={"Cluster:" + feature.properties.cluster_id + "-" + count}
           label={count.toString()}
           icon={clusterCircle}
         />
@@ -93,19 +95,27 @@ class ClusterMap extends React.Component<IClusterMapProps> {
     this.holdUpdates = true;
   }
   render() {
-    const { positions, count, onBoundshanged } = this.props;
+    const {
+      positions,
+      count,
+      onBoundshanged,
+      onDragStart,
+      onDragEnd
+    } = this.props;
 
     //console.time("getmarkers");
     const markers = getMarkers(this.map, positions);
     //console.timeEnd("getmarkers");
     return (
       <>
-        <div>count: {count}</div>
+        <div>Marker/Cluser count: {markers ? markers.length : 0}</div>
         <GoogleMap
           ref={this.map}
           defaultZoom={DEFAULT_VIEWPORT.zoom}
           defaultCenter={DEFAULT_VIEWPORT.center}
           onBoundsChanged={onBoundshanged}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
         >
           {markers}
         </GoogleMap>

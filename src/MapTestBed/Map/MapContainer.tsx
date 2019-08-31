@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ClipLoader } from "react-spinners";
 import supercluster from "supercluster";
 
 import ClusterMap from "./ClusterMap";
@@ -48,6 +47,8 @@ const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
   useEffect(() => {
     async function updatePositions() {
       if (!updateList || positions.length === 0) return;
+      //don't refresh while loading more positions.
+      if (loading) return;
 
       API.GetItems(updateList, positions)
         .then(newFeaPositions => {
@@ -87,6 +88,14 @@ const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
           positions={clustered}
           count={count++}
           onBoundshanged={() => {
+            //hold refresh until after move
+            if (loading) return;
+            setData({ positions: positions, loading: false });
+          }}
+          onDragStart={() => {
+            setData({ positions: positions, loading: true });
+          }}
+          onDragEnd={() => {
             setData({ positions: positions, loading: false });
           }}
         />
