@@ -14,7 +14,7 @@ interface ICustomerMapProp {
   updateList: number[] | undefined;
 }
 
-const Map: React.StatelessComponent<ICustomerMapProp> = props => {
+const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
   const [{ positions, loading }, setData] = useState<IMapState>({
     positions: [],
     loading: true
@@ -71,4 +71,4 @@ const Map: React.StatelessComponent<ICustomerMapProp> = props => {
   );
 };
 
-export default Map;
+export default MapContainer;

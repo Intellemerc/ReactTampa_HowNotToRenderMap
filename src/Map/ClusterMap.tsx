@@ -23,13 +23,15 @@ interface IPositionInfoProps {
   numPos: number;
 }
 
-const PositionInfo: React.StatelessComponent<IPositionInfoProps> = props => {
-  const { numPos } = props;
-  return <div>{numPos} positions loaded.</div>;
+const getMarkers = (positions: IGpsLocaiton[]) => {
+  return positions.map(pos => (
+    <Marker key={pos.id} position={{ lat: pos.latitude, lng: pos.longitude }} />
+  ));
 };
 
 const ClusterMap: React.StatelessComponent<IClusterMapProps> = props => {
   const { positions } = props;
+  const markers = getMarkers(positions);
   return (
     <>
       <GoogleMap
@@ -37,17 +39,10 @@ const ClusterMap: React.StatelessComponent<IClusterMapProps> = props => {
         defaultCenter={DEFAULT_VIEWPORT.center}
       >
         {positions ? (
-          <MarkerClusterer gridSize={50}>
-            {positions.map(pos => (
-              <Marker
-                key={pos.id}
-                position={{ lat: pos.latitude, lng: pos.longitude }}
-              />
-            ))}
-          </MarkerClusterer>
+          <MarkerClusterer gridSize={50}>{markers}</MarkerClusterer>
         ) : null}
       </GoogleMap>
-      <PositionInfo numPos={positions ? positions.length : 0} />
+      <div>markers loaded: {markers.length}</div>
     </>
   );
 };

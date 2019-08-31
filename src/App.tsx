@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Map from "./Map/Map";
+import Map from "./Map/MapContainer";
 import "./App.css";
 import { useDebounce } from "use-debounce";
 
