@@ -23,10 +23,10 @@ const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
   useEffect(() => {
     setData({ loading: true, positions });
     async function getPositions() {
-      console.log("loading maxpositions: ", maxPositions);
+      //console.log("loading maxpositions: ", maxPositions);
 
       API.GetPositions(maxPositions).then(positions => {
-        console.log("Positions/length: ", positions, positions.length);
+        //console.log("Positions/length: ", positions, positions.length);
         setData({ positions, loading: false });
       });
     }
@@ -49,7 +49,7 @@ const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
         })
         .then(updatedPositions => {
           if (updatedPositions) {
-            console.log(`${updatedPositions.length} Positions updated`);
+            //console.log(`${updatedPositions.length} Positions updated`);
             setData({ positions: updatedPositions, loading: false });
           }
         });
