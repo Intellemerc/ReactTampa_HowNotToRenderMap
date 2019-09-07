@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Map from "./MapTestBed";
 import PerTests from "./TestPerfFixes";
@@ -7,8 +8,24 @@ import PerTests from "./TestPerfFixes";
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Map />
-      {/* <PerTests /> */}
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/Perf">PerfTests</Link>
+              </li>
+              <li>
+                <Link to="/Map">Map</Link>
+              </li>
+            </ul>
+          </nav>
+          <div className="content">
+            <Route path="/Perf" component={PerTests} />
+            <Route path="/Map" exact component={Map} />
+          </div>
+        </div>
+      </Router>
     </div>
   );
 };
