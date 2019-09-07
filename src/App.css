@@ -21,6 +21,9 @@
 /*** ACCORDION ***/
 
 /* Header */
+.accordion {
+  margin: 2px;
+}
 .accordion > div > div:first-of-type {
   padding: 1em;
   background-color: #4abdac;
