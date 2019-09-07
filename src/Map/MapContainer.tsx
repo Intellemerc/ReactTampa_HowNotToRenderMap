@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { IGpsLocaiton } from "../IGPSLocation";
+import { IGpsLocation } from "../IGPSLocation";
 import { ClipLoader } from "react-spinners";
 
 import ClusterMap from "./ClusterMap";
 import API from "../API";
 
 interface IMapState {
-  positions?: IGpsLocaiton[];
+  positions?: IGpsLocation[];
   loading: boolean;
 }
 interface ICustomerMapProp {
@@ -37,7 +37,7 @@ const MapContainer: React.StatelessComponent<ICustomerMapProp> = props => {
     async function updatePositions() {
       if (!updateList || positions.length === 0) return;
 
-      API.GetItems(updateList)
+      API.GetItems(updateList, positions)
         .then(newPositions => {
           return positions.map(origPos => {
             const matched = newPositions.filter(np => np.id === origPos.id);

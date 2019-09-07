@@ -1,11 +1,11 @@
-import { IGpsLocaiton } from "./IGPSLocation";
+import { IGpsLocation } from "./IGPSLocation";
 import faker from "faker";
 
 const MAX_LIMIT = 1000000;
 
 interface IIndexedPosition {
   i: number;
-  position: IGpsLocaiton;
+  position: IGpsLocation;
 }
 
 function randomCoordBetween(min, max) {
@@ -42,8 +42,8 @@ const data = (() => {
 })();
 
 class API {
-  GetPositions(maxPositions: number): Promise<IGpsLocaiton[]> {
-    let pages: Promise<IGpsLocaiton[]> = new Promise((resolve, reject) => {
+  GetPositions(maxPositions: number): Promise<IGpsLocation[]> {
+    let pages: Promise<IGpsLocation[]> = new Promise((resolve, reject) => {
       resolve(
         data.slice(0, maxPositions < MAX_LIMIT ? maxPositions : MAX_LIMIT)
       );
@@ -51,15 +51,35 @@ class API {
 
     return pages;
   }
+  /**
+   *Move the given geospacial location by a small amount
+   *
+   * @param {IGpsLocation} loc
+   * @returns {IGpsLocation}
+   * @memberof API
+   */
+  randomMove(loc: IGpsLocation): IGpsLocation {
+    const shouldSubMove = Math.floor(Math.random() * 100) % 2 === 0;
+
+    loc.latitude =
+      loc.latitude + Math.random() * 0.1 * (shouldSubMove ? -1 : 1);
+    loc.longitude =
+      loc.longitude + Math.random() * 0.1 * (shouldSubMove ? -1 : 1);
+    return loc;
+  }
   //replace previous pos with random position, but keep array index
-  GetItems(itemsToUpdate: number[]): Promise<IGpsLocaiton[]> {
+  GetItems(
+    itemsToUpdate: number[],
+    existingPostions: IGpsLocation[]
+  ): Promise<IGpsLocation[]> {
     return new Promise((resolve, reject) => {
       resolve(
         itemsToUpdate.map(itm => {
-          let pos = data[Math.floor(Math.random() * MAX_LIMIT)];
+          const itmToUpdate = this.randomMove(existingPostions[itm]);
+
           //create new object with index of existin position, new gps position
           //and the ID of the position
-          return { ...pos, id: itm };
+          return { ...itmToUpdate };
         })
       );
     });
