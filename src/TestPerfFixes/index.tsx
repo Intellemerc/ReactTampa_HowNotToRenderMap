@@ -98,7 +98,7 @@ const App: React.FC = () => {
       </Accordion>
 
       <Accordion className="accordion">
-        <div data-header="Reat.PureCompent:" className="accordion-item">
+        <div data-header="React.PureCompent:" className="accordion-item">
           <div style={section}>
             <Pure outsideCount={sharedCount} />
           </div>
