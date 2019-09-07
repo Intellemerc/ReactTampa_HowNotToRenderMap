@@ -14,7 +14,7 @@ interface ICustomerMapProp {
   maxPositions: number;
   updateList: number[] | undefined;
 }
-const sc = new supercluster({ radius: 75, maxZoom: 17, log: false });
+const sc = new supercluster({ radius: 100, maxZoom: 17, log: false });
 function getSuperCluster(
   points: IGpsLocation[]
 ): supercluster<supercluster.AnyProps, supercluster.AnyProps> {

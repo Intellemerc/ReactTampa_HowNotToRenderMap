@@ -54,7 +54,33 @@ class API {
 
     return pages;
   }
-  //replace previous pos with random position, but keep array index
+
+  /**
+   *Move the given geospacial location by a small amount
+   *
+   * @param {IGpsLocation} loc
+   * @returns {IGpsLocation}
+   * @memberof API
+   */
+  randomMove(loc: IGpsLocation): IGpsLocation {
+    const shouldSubMove = Math.floor(Math.random() * 100) % 2 === 0;
+
+    loc.geometry.coordinates[0] =
+      loc.geometry.coordinates[0] +
+      Math.random() * 0.1 * (shouldSubMove ? -1 : 1);
+    loc.geometry.coordinates[1] =
+      loc.geometry.coordinates[1] +
+      Math.random() * 0.1 * (shouldSubMove ? -1 : 1);
+    return loc;
+  }
+  /**
+   * Get updated list of items based on the passed in list
+   *
+   * @param {number[]} itemsToUpdate List of items to request new positions for
+   * @param {IGpsLocation[]} existingPostions the existing position list
+   * @returns {Promise<IGpsLocation[]>} new list of postions with updates
+   * @memberof API
+   */
   GetItems(
     itemsToUpdate: number[],
     existingPostions: IGpsLocation[]
@@ -62,15 +88,11 @@ class API {
     return new Promise((resolve, reject) => {
       resolve(
         itemsToUpdate.map(itm => {
-          let existing =
-            data[
-              Math.floor(Math.random() * (MAX_LIMIT - existingPostions.length))
-            ];
+          const itmToUpdate = this.randomMove(existingPostions[itm]);
+
           //create new object with index of existin position, new gps position
           //and the ID of the position
-          let newItm = { ...existing };
-          newItm.properties.id = itm;
-          return newItm;
+          return { ...itmToUpdate };
         })
       );
     });

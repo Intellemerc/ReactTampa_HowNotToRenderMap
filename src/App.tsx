@@ -21,8 +21,8 @@ const App: React.FC = () => {
             </ul>
           </nav>
           <div className="content">
-            <Route path="/Perf" component={PerTests} />
             <Route path="/Map" exact component={Map} />
+            <Route path="/Perf" component={PerTests} />
           </div>
         </div>
       </Router>

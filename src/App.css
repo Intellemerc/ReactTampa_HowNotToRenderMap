@@ -70,7 +70,7 @@ nav {
   text-align: center;
   width: 20%;
   float: left;
-  padding-top: 75px;
+  padding-top: 97px;
 }
 nav ul {
   list-style-type: none;
@@ -79,13 +79,12 @@ nav ul {
 }
 
 nav ul li {
-  margin: 5px 10px;
+  margin: 2px 10px;
   border-radius: 5px;
   width: 100%;
 }
 nav a {
   text-decoration: none;
-  margin: 5px 10px;
   border-radius: 5px;
   padding: 1em;
   background-color: #4abdac;
