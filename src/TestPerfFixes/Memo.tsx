@@ -7,10 +7,10 @@ interface IProps {
   innerObj: IInnerObj;
 }
 
-const Memo: React.FC<IProps> = ({ innerObj }) => {
+const MyMemo: React.FC<IProps> = ({ innerObj }) => {
   return (
     <div>
-      Test pure (Updates props change):&nbsp;
+      Test Memo (Updates props change):&nbsp;
       <span
         style={{
           fontWeight: "bolder",
@@ -23,4 +23,4 @@ const Memo: React.FC<IProps> = ({ innerObj }) => {
   );
 };
 
-export default memo(Memo);
+export default memo(MyMemo);

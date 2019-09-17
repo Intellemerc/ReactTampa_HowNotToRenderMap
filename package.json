@@ -11,6 +11,7 @@
     "@types/recompose": "^0.30.6",
     "@types/supercluster": "^5.0.1",
     "faker": "^4.1.0",
+    "html-to-react": "^1.4.1",
     "json-server": "^0.15.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

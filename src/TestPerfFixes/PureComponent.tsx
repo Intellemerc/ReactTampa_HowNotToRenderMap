@@ -17,6 +17,8 @@ export default class TestPure extends React.PureComponent<IProps> {
           }}
         >
           {outsideCount}
+          <br />
+          Last updated at {new Date().toTimeString()}
         </span>
       </div>
     );

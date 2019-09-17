@@ -45,6 +45,7 @@ const App: React.FC = () => {
         <div data-header="Should Component Update:" className="accordion-item">
           <div style={section}>
             <div>
+              Force:{" "}
               <input
                 type="radio"
                 name="forceUpdate"
@@ -59,7 +60,6 @@ const App: React.FC = () => {
                 }
               />
               <label>False</label>
-
               <input
                 type="radio"
                 name="forceUpdate"
