@@ -35,7 +35,7 @@ const MapTester: React.FC = () => {
     console.log("Setting up refresh interval");
     setIntervalAsync(async () => {
       if (!itu) {
-        itu = Array.from(Array(250).keys());
+        itu = Array.from(Array(300).keys());
       }
       itu = itu.map(() => Math.floor(Math.random() * form.maxPos));
       //console.log(`updating ${itu.length} items`);

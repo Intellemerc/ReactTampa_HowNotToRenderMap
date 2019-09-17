@@ -7,20 +7,11 @@ import {
   Marker
 } from "react-google-maps";
 
-import "./Markers/Marker.css";
-//import ClusterMarker from "./Markers/ClusterMarker";
+import ClusterMarker from "./Markers/ClusterMarker";
 
 const DEFAULT_VIEWPORT = {
   center: { lat: 37.040578, lng: -98.506877 },
   zoom: 5
-};
-
-var clusterCircle = {
-  path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
-  fillColor: "#699ff5",
-  fillOpacity: 1,
-  strokeWeight: 0,
-  scale: 0.75
 };
 
 interface IClusterMapProps {
@@ -71,11 +62,10 @@ function getMarkers(
     if (feature.properties && feature.properties.cluster) {
       var count = feature.properties.point_count;
       return (
-        <Marker
-          position={latLon}
+        <ClusterMarker
+          latLon={latLon}
           key={"Cluster:" + feature.properties.cluster_id + "-" + count}
-          label={count.toString()}
-          icon={clusterCircle}
+          ClusterCount={count}
         />
       );
     }

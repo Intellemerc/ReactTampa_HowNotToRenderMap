@@ -21,7 +21,7 @@ const App: React.FC = () => {
             </ul>
           </nav>
           <div className="content">
-            <Route path="/Map" exact component={Map} />
+            <Route path="/" exact component={Map} />
             <Route path="/Perf" component={PerTests} />
           </div>
         </div>
