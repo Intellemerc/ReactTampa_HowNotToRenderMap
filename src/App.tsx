@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import Map from "./MapTestBed";
 import PerTests from "./TestPerfFixes";
@@ -13,7 +13,7 @@ const App: React.FC = () => {
           <nav>
             <ul>
               <li>
-                <Link to="/Perf">PerfTests</Link>
+                <Link to="/">PerfTests</Link>
               </li>
               <li>
                 <Link to="/Map">Map</Link>
@@ -21,8 +21,10 @@ const App: React.FC = () => {
             </ul>
           </nav>
           <div className="content">
-            <Route path="/" component={PerTests} />
-            <Route path="/Map" exact component={Map} />
+            <Switch>
+              <Route exact path="/" component={PerTests} />
+              <Route path="/Map" exact component={Map} />
+            </Switch>
           </div>
         </div>
       </Router>
