@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### pre-requisites
+
+Before this example will work you need to populate the .env variable for `REACT_APP_GOOGLE_MAPS_API` in either the _.env_ file or a _.env.local_
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
