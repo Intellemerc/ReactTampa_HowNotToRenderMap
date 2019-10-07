@@ -54,7 +54,7 @@
   overflow: auto;
 }
 .accordion > div:first-child .accordion-item {
-  max-height: 200px;
+  max-height: 250px;
 }
 .accordion > div.open .accordion-item {
   opacity: 1;
@@ -102,4 +102,8 @@ nav a {
   width: 75%;
   float: right;
   margin: 15px;
+}
+
+.exampleImage {
+  padding: 15px 0;
 }

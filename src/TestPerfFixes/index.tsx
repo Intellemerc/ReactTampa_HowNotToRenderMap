@@ -76,6 +76,9 @@ const App: React.FC = () => {
               <label>True</label>
             </div>
             <SCU outsideCount={sharedCount} forceUpdate={forceUpdate} />
+            <div className="exampleImage">
+              <img src="./shouldUPdate.png" />
+            </div>
           </div>
         </div>
       </Accordion>
@@ -86,14 +89,18 @@ const App: React.FC = () => {
             <label style={sectionLabel}>Memo(new Obj):</label>
             <Memo innerObj={{ outsideCount: sharedCount }} />
           </div>
-
           <div style={section}>
             <label style={sectionLabel}>Memo(Same Obj):</label>
             <Memo innerObj={memoObj} />
           </div>
-          <button onClick={() => (memoObj = { outsideCount: sharedCount })}>
-            new memoObj
-          </button>
+          <div style={section}>
+            <button onClick={() => (memoObj = { outsideCount: sharedCount })}>
+              new memoObj
+            </button>
+            <div className="exampleImage">
+              <img src="./memo.png" />
+            </div>
+          </div>
         </div>
       </Accordion>
 
@@ -101,6 +108,9 @@ const App: React.FC = () => {
         <div data-header="React.PureCompent:" className="accordion-item">
           <div style={section}>
             <Pure outsideCount={sharedCount} />
+            <div className="exampleImage">
+              <img src="./pure.png" />
+            </div>
           </div>
         </div>
       </Accordion>
@@ -143,6 +153,9 @@ const App: React.FC = () => {
           >
             Reset
           </button>
+          <div className="exampleImage">
+            <img src="./buttonClick.png" />
+          </div>
         </div>
       </div>
     </div>
