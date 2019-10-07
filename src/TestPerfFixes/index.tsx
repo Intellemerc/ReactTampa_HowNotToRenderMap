@@ -77,7 +77,7 @@ const App: React.FC = () => {
             </div>
             <SCU outsideCount={sharedCount} forceUpdate={forceUpdate} />
             <div className="exampleImage">
-              <img src="./shouldUPdate.png" />
+              <img src="./shouldUpdate.png" alt="Should update" />
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ const App: React.FC = () => {
               new memoObj
             </button>
             <div className="exampleImage">
-              <img src="./memo.png" />
+              <img src="./memo.png" alt="Memo image" />
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ const App: React.FC = () => {
           <div style={section}>
             <Pure outsideCount={sharedCount} />
             <div className="exampleImage">
-              <img src="./pure.png" />
+              <img src="./pure.png" alt="pure componenet example" />
             </div>
           </div>
         </div>
@@ -154,7 +154,7 @@ const App: React.FC = () => {
             Reset
           </button>
           <div className="exampleImage">
-            <img src="./buttonClick.png" />
+            <img src="./buttonClick.png" alt="Example of what the buttons do" />
           </div>
         </div>
       </div>
