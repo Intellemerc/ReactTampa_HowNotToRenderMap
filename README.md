@@ -6,7 +6,7 @@ In the project directory, you can run:
 
 ### pre-requisites
 
-Before this example will work you need to populate the .env variable for `REACT_APP_GOOGLE_MAPS_API` in either the _.env_ file or a _.env.local_
+Before this example will work you need to populate the .env variable for `REACT_APP_GOOGLE_MAPS_API` in either the _.env_ file or a _.env.local_ with your own google API key [https://developers.google.com/maps/documentation/javascript/get-api-key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 ### `npm start`
 
