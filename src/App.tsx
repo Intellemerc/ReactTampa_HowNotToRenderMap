@@ -14,10 +14,10 @@ const App: React.FC = () => {
           <nav>
             <ul>
               <li>
-                <Link to="/PerfTools">Perf Tools</Link>
+                <Link to="/">Perf Tools</Link>
               </li>
               <li>
-                <Link to="/">PerfTests</Link>
+                <Link to="/PerfTests">PerfTests</Link>
               </li>
               <li>
                 <Link to="/Map">Map</Link>
