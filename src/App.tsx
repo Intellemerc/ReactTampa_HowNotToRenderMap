@@ -14,21 +14,21 @@ const App: React.FC = () => {
           <nav>
             <ul>
               <li>
+                <Link to="/PerfTools">Perf Tools</Link>
+              </li>
+              <li>
                 <Link to="/">PerfTests</Link>
               </li>
               <li>
                 <Link to="/Map">Map</Link>
               </li>
-              <li>
-                <Link to="/PerfTools">Perf Tools</Link>
-              </li>
             </ul>
           </nav>
           <div className="content">
             <Switch>
-              <Route exact path="/" component={PerTests} />
+              <Route exact path="/" component={PerfTools} />
               <Route path="/Map" exact component={Map} />
-              <Route path="/PerfTools" exact component={PerfTools} />
+              <Route path="/PerfTests" exact component={PerTests} />
             </Switch>
           </div>
         </div>

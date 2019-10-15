@@ -11,7 +11,14 @@ const Comp: React.FC<IProps> = () => {
       doNothing();
     }
   }
-  return <div>Long render, last rendered at: {new Date().toTimeString()}</div>;
+  return (
+    <div>
+      Long render, last rendered at:{" "}
+      <span style={{ color: "red", fontWeight: "bold" }}>
+        {new Date().toTimeString()}
+      </span>
+    </div>
+  );
 };
 
 export default Comp;
