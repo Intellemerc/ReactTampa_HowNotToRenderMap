@@ -7,7 +7,7 @@ interface IProps {}
 
 const iterations = 100;
 let currentIteration = 0;
-const Comp: React.FC<IProps> = () => {
+const ManySmallRenders: React.FC<IProps> = () => {
   const [{ updateCtn }, setState] = useState<IState>({ updateCtn: 0 });
 
   const bttnClick = () => {
@@ -30,4 +30,4 @@ const Comp: React.FC<IProps> = () => {
   );
 };
 
-export default Comp;
+export default ManySmallRenders;
